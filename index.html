@@ -10,7 +10,6 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
-
         }
         .restaurant-card img {
             width: 100%;
@@ -27,18 +26,17 @@
         .restaurant-info p {
             margin: 0;
             color: #6c757d;
-
         }
         .search-bar {
             margin-top: 20px;
             margin-bottom: 20px;
         }
         .header {
-            background-color: yellow;
+            background-color: #FF6F00; /* Color de fondo similar a la imagen */
             padding: 15px 20px;
         }
         .footer {
-            background-color: yellow;
+            background-color: #FF6F00; /* Cambiar el color de fondo del pie de página */
             padding: 15px;
             text-align: center;
             margin-top: 20px;
@@ -48,19 +46,80 @@
             max-height: 50px;
             height: auto;
         }
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .navbar-nav .nav-link {
+            color: white !important; /* Color blanco para los enlaces de navegación */
+            font-size: 24px;
+        }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: #FF6F00; /* Color del icono del carrusel */
+            border-radius: 50%;
+        }
         a {
-    color: inherit; /* Mantiene el color del texto de la página */
-    text-decoration: none; /* Elimina subrayado */
-}
+            color: #000 !important; /* Color negro para enlaces normales */
+        }
+    </style>
+</head>
+<body>
 
-a:hover {
-    color: #007bff; /* Cambia el color al pasar el mouse (opcional) */
-}
-
-a:visited {
-    color: inherit; /* Hace que los enlaces visitados tengan el mismo color */
-}
-
+<!-- Encabezado -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cero Distancia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .restaurant-card {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .restaurant-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .restaurant-info {
+            padding: 15px;
+        }
+        .restaurant-info h5 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        .restaurant-info p {
+            margin: 0;
+            color: #6c757d;
+        }
+        .search-bar {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .header {
+            background-color: #FFCF01; /* Nuevo color de fondo */
+            padding: 1px 1px;
+        }
+        .footer {
+            background-color: #FFCF01; /* Nuevo color de fondo */
+            padding: 15px;
+            text-align: center;
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+        .navbar-brand img {
+            max-height: 70px;
+            height: auto;
+        }
+        a {
+            color: inherit; /* Evitar color violeta */
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -75,22 +134,23 @@ a:visited {
 
         <!-- Logo Centrizado -->
         <a class="navbar-brand mx-auto d-flex" href="#">
-            <img src="img/logo_horizontal.png" class="img-fluid" alt="Logo"> <!-- Logo centrado y responsivo -->
+            <img src="img/logo cd_Mesa de trabajo 1 copia 2.png" class="img-fluid" alt="Logo"> <!-- Logo actualizado -->
         </a>
 
         <!-- Opciones de Ingresar y Registrarse -->
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Ingresar</a>
+                    <a class="nav-link" href="#">Admin</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Registrarse</a>
-                </li>
+                
             </ul>
         </div>
     </div>
 </nav>
+
+<!-- Resto del contenido sigue igual -->
+
 
 <!-- Barra de Búsqueda -->
 <div class="container search-bar">
@@ -165,7 +225,7 @@ a:visited {
                     <img src="img/restaurante1.webp" class="card-img-top" alt="Restaurant 1">
                     <div class="restaurant-info">
                         <h5>Restaurant 1</h5>
-                        <p>Comida Rápida</p>
+                        <p>Comida Italiana</p>
                     </div>
                 </a>
             </div>
