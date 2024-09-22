@@ -163,7 +163,7 @@ $restaurantes = $pdo->query("SELECT * FROM restaurantes")->fetchAll(PDO::FETCH_A
         <?php foreach ($restaurantes as $restaurante): ?>
         <div class="col-md-4">
             <div class="card restaurant-card">
-                <a href="restaurantes/<?= $restaurante['carpeta'] ?>/index.php">
+                <a href="menu.php?restaurante_id=<?= $restaurante['id'] ?>">
                     <img src="restaurantes/<?= $restaurante['carpeta'] ?>/img/<?= $restaurante['imagen'] ?>" class="card-img-top" alt="<?= $restaurante['nombre'] ?>">
                     <div class="restaurant-info">
                         <h5><?= $restaurante['nombre'] ?></h5>
