@@ -160,54 +160,53 @@ $productos = $stmt_productos->fetchAll(PDO::FETCH_ASSOC);
       </div>
     </div>
 
-    <script>
-    $(document).ready(function() {
-        // Agregar al carrito
-        $('.add-to-cart').on('click', function () {
-            let productId = $(this).data('id');
-            let productName = $(this).data('name');
-            let productPrice = $(this).data('price');
-            let productDescription = $(this).data('description');
-            let productImage = $(this).data('image');
+   <!-- Tu código HTML y PHP permanece igual hasta llegar a los scripts -->
+<script>
+$(document).ready(function() {
+    // Agregar al carrito
+    $('.add-to-cart').on('click', function () {
+        let productId = $(this).data('id');
+        let productName = $(this).data('name');
+        let productPrice = $(this).data('price');
+        let productDescription = $(this).data('description');
+        let productImage = $(this).data('image');
 
-            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-            let existingProduct = carrito.find(item => item.id === productId);
+        let existingProduct = carrito.find(item => item.id === productId);
 
-            if (existingProduct) {
-                existingProduct.quantity += 1;
-            } else {
-                carrito.push({
-                    id: productId,
-                    name: productName,
-                    price: productPrice,
-                    description: productDescription,
-                    image: productImage,
-                    quantity: 1
-                });
-            }
+        if (existingProduct) {
+            existingProduct.quantity += 1;
+        } else {
+            carrito.push({
+                id: productId,
+                name: productName,
+                price: productPrice,
+                description: productDescription,
+                image: productImage,
+                quantity: 1
+            });
+        }
 
-            localStorage.setItem('carrito', JSON.stringify(carrito));
-            alert('Producto agregado al carrito');
-        });
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        alert('Producto agregado al carrito');
+    });
 
-        // Mostrar resumen del carrito en el nuevo modal
-        $('#continuarCompra').on('click', function () {
-            $('#compraModal').modal('show'); 
-            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            
-            if (carrito.length === 0) {
-                alert('El carrito está vacío, agrega productos antes de continuar.');
-                return;
-            }
+    // Mostrar contenido del carrito en el modal cuando se abre
+    $('#carritoModal').on('show.bs.modal', function () {
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        let modalBody = $('#carrito-modal-body');
+        let total = 0;
 
-            let resumenHTML = '<ul class="list-group">';
-            let total = 0;
-
+        if (carrito.length === 0) {
+            modalBody.html('<p>El carrito está vacío.</p>');
+            $('#carrito-total').text('Total: $0.00');
+        } else {
+            let cartHTML = '<ul class="list-group">';
             carrito.forEach(item => {
                 let subtotal = item.price * item.quantity;
                 total += subtotal;
-                resumenHTML += `
+                cartHTML += `
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div>
                             <div class="fw-bold">${item.name} x ${item.quantity}</div>
@@ -216,44 +215,85 @@ $productos = $stmt_productos->fetchAll(PDO::FETCH_ASSOC);
                         <span>$${subtotal.toFixed(2)}</span>
                     </li>`;
             });
-
-            resumenHTML += `</ul><div class="mt-3 text-end"><strong>Total: $${total.toFixed(2)}</strong></div>`;
-            $('#resumen-pedido').html(resumenHTML);
-            $('#resumen-pedido').data('total', total); 
-        });
-
-        // Enviar la información por WhatsApp
-        $('#enviarWhatsApp').on('click', function () {
-            let nombre = $('#nombre').val();
-            let apellido = $('#apellido').val();
-            let telefono = $('#telefono').val();
-            let calle = $('#calle').val();
-            let numero = $('#numero').val();
-            let barrio = $('#barrio').val();
-
-            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            if (carrito.length === 0) {
-                alert('El carrito está vacío, agrega productos antes de continuar.');
-                return;
-            }
-
-            let mensaje = `Hola, soy ${nombre} ${apellido}. Quisiera hacer un pedido de:\n`;
-            let total = 0;
-
-            carrito.forEach(item => {
-                let subtotal = item.price * item.quantity;
-                total += subtotal;
-                mensaje += `- ${item.quantity} x ${item.name} (${item.description}) - $${subtotal.toFixed(2)}\n`;
-            });
-
-            mensaje += `\nPor un valor total de: $${total.toFixed(2)}`;
-            mensaje += `\nPara entregar en: ${calle} ${numero}, ${barrio}.`;
-            mensaje += `\nTeléfono de contacto: ${telefono}`;
-
-            let whatsappUrl = `https://wa.me/5492944682681?text=${encodeURIComponent(mensaje)}`;
-            window.open(whatsappUrl, '_blank');
-        });
+            cartHTML += '</ul>';
+            modalBody.html(cartHTML);
+            $('#carrito-total').text(`Total: $${total.toFixed(2)}`);
+        }
     });
-    </script>
+
+    // Mostrar resumen del carrito en el modal de compra
+    $('#continuarCompra').on('click', function () {
+        $('#compraModal').modal('show'); 
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        if (carrito.length === 0) {
+            alert('El carrito está vacío, agrega productos antes de continuar.');
+            return;
+        }
+
+        let resumenHTML = '<ul class="list-group">';
+        let total = 0;
+
+        carrito.forEach(item => {
+            let subtotal = item.price * item.quantity;
+            total += subtotal;
+            resumenHTML += `
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="fw-bold">${item.name} x ${item.quantity}</div>
+                        <small>${item.description}</small>
+                    </div>
+                    <span>$${subtotal.toFixed(2)}</span>
+                </li>`;
+        });
+
+        resumenHTML += `</ul><div class="mt-3 text-end"><strong>Total: $${total.toFixed(2)}</strong></div>`;
+        $('#resumen-pedido').html(resumenHTML);
+        $('#resumen-pedido').data('total', total); 
+    });
+
+    // Enviar la información por WhatsApp
+    $('#enviarWhatsApp').on('click', function () {
+        let nombre = $('#nombre').val();
+        let apellido = $('#apellido').val();
+        let telefono = $('#telefono').val();
+        let calle = $('#calle').val();
+        let numero = $('#numero').val();
+        let barrio = $('#barrio').val();
+
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        if (carrito.length === 0) {
+            alert('El carrito está vacío, agrega productos antes de continuar.');
+            return;
+        }
+
+        let mensaje = `Hola, soy ${nombre} ${apellido}. Quisiera hacer un pedido de:\n`;
+        let total = 0;
+
+        carrito.forEach(item => {
+            let subtotal = item.price * item.quantity;
+            total += subtotal;
+            mensaje += `- ${item.quantity} x ${item.name} (${item.description}) - $${subtotal.toFixed(2)}\n`;
+        });
+
+        mensaje += `\nPor un valor total de: $${total.toFixed(2)}`;
+        mensaje += `\nPara entregar en: ${calle} ${numero}, ${barrio}.`;
+        mensaje += `\nTeléfono de contacto: ${telefono}`;
+
+        let whatsappUrl = `https://wa.me/5492944682681?text=${encodeURIComponent(mensaje)}`;
+        window.open(whatsappUrl, '_blank');
+    });
+});
+
+// Definir la función vaciarCarrito
+function vaciarCarrito() {
+    localStorage.removeItem('carrito');
+    alert('El carrito ha sido vaciado.');
+    // Actualizar el contenido del modal y el total
+    $('#carrito-modal-body').html('<p>El carrito está vacío.</p>');
+    $('#carrito-total').text('Total: $0.00');
+}
+</script>
+
 </body>
 </html>

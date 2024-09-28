@@ -1,4 +1,13 @@
 <?php
+
+session_start();
+
+// Verificar si el administrador ha iniciado sesión
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    // Redirigir al formulario de inicio de sesión
+    header('Location: login.php');
+    exit();
+}
 include 'db.php';
 
 // Mostrar restaurantes

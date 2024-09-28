@@ -84,24 +84,15 @@ $restaurantes = $pdo->query("SELECT * FROM restaurantes")->fetchAll(PDO::FETCH_A
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="admin.php">Restaurantes</a>
+                    <a class="nav-link" href="admin.php">Admin</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="productos_admin.php?restaurante_id=<?= isset($restaurante['id']) ? $restaurante['id'] : '' ?>">Menús</a>
-                </li>
+                
             </ul>
         </div>
     </div>
 </nav>
 
-<!-- Barra de Búsqueda -->
-<div class="container search-bar">
-    <div class="row">
-        <div class="col-12">
-            <input type="text" class="form-control form-control-lg" placeholder="Buscar restaurantes o tipos de comida...">
-        </div>
-    </div>
-</div>
+
 
 <!-- Categorías de comida (Carrusel) -->
 <div class="container mt-4">
